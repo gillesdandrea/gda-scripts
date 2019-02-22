@@ -3,6 +3,8 @@
 
 /* eslint-disable no-console */
 
+const startTime = Date.now();
+
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
@@ -37,6 +39,8 @@ if (fs.existsSync(path.join(__dirname, `../scripts/${script.replace(':', '.')}.j
     }
     process.exit(1);
   }
+  const duration = ((Date.now() - startTime) / 1000).toFixed(2);
+  console.log(`✨  Done in ${duration}s.`); // TODO use chalk
   process.exit(result.status);
 } else {
   console.log(`${pkg.name}@${pkg.version}`);

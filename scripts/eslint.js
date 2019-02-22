@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
-const fs = require('fs');
 
+const fs = require('fs');
 const glob = require('fast-glob');
 
 const execute = require('../src/execute');
@@ -33,7 +33,7 @@ const parameters = [
   fix && '--fix',
   '--color',
   '--report-unused-disable-directives',
-  // '--cache',
+  '--cache',
   // '--cache-location',
   // cache,
   // '--debug',

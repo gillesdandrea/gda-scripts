@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
+
 const fs = require('fs');
+// const path = require('path');
 
 const execute = require('../src/execute');
 const resolveConfig = require('../src/resolveConfig');
@@ -10,9 +12,9 @@ const files = idx >= 0 ? args.slice(0, idx) : args;
 const options = idx >= 0 ? args.slice(idx) : [];
 
 // eslint-disable-next-line no-nested-ternary
-const path = fs.existsSync('src') ? 'src' : fs.existsSync('packages') ? 'packages/*/src' : null;
-if (path === null) {
-  console.log('Usage: gda-scripts stylelint <path>');
+const paths = fs.existsSync('src') ? 'src' : fs.existsSync('packages') ? 'packages/*/src' : null;
+if (paths === null) {
+  console.log('Usage: gda-scripts stylelint <paths>');
   return;
 }
 
@@ -22,18 +24,18 @@ const targets =
     ? files.map(file =>
         file.includes('*.') || file.includes('.css') || file.includes('.scss') ? file : `${file}/**/*.{css,scss}`
       )
-    : [`${path}/**/*.{css,scss}`];
+    : [`${paths}/**/*.{css,scss}`];
 
 const config = resolveConfig('stylelint').filepath;
-// const cache = path.resolve(process.cwd(), './.stylelintcache');
+// const cache = path.join(process.cwd(), './.stylelintcache/');
 const parameters = [
   ...targets,
   '--config',
   config,
-  '--syntax=scss',
+  // '--syntax=scss', // not necessary as syntax is inferred by extension
   // fix && '--fix', // comes with options
   '--color',
-  // '--cache',
+  '--cache',
   // '--cache-location',
   // cache,
   ...options,
