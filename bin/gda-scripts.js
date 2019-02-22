@@ -20,7 +20,7 @@ const script = process.argv[2] || '';
 const scriptArgs = process.argv.slice(3);
 
 if (fs.existsSync(path.join(__dirname, `../scripts/${script.replace(':', '.')}.js`))) {
-  const result = execute('node', [require.resolve(`../scripts/${script}`)].concat(scriptArgs));
+  const result = execute('node', [require.resolve(`../scripts/${script}`)].concat(scriptArgs), undefined, false);
   if (result.signal) {
     if (result.signal === 'SIGKILL') {
       console.log(
