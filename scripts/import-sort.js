@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable no-nested-ternary */
 
 const fs = require('fs');
 // const path = require('path');
@@ -12,12 +13,10 @@ const others = args.filter(arg => arg.startsWith('-'));
 const files = args.filter(arg => !arg.startsWith('-')); // TODO may mix files and option parameters
 
 const exts = '*.{js,jsx,ts,tsx}';
-
-// eslint-disable-next-line no-nested-ternary
 const paths = fs.existsSync('src')
   ? [`src/**/${exts}`]
   : fs.existsSync('packages')
-  ? glob.sync([`packages/*/src/**/${exts}`], { onlyDirectories: true })
+  ? glob.sync([`packages/*/src/**/${exts}`], { onlyFiles: false })
   : [];
 if (paths.length === 0) {
   console.log('Usage: gda-scripts import-sort <path>');

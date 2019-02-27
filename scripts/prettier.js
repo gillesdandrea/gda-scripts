@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
+/* eslint-disable no-nested-ternary */
 
 const fs = require('fs');
 const path = require('path');
-const glob = require('fast-glob');
 
 const execute = require('../src/execute');
 const resolveConfig = require('../src/resolveConfig');
@@ -13,11 +13,10 @@ const files = args.filter(arg => !arg.startsWith('-')); // TODO may mix files an
 
 const exts = '*.{js,jsx,ts,tsx,css,scss,html,json,md}';
 
-// eslint-disable-next-line no-nested-ternary
 const paths = fs.existsSync('src')
   ? [`src/**/${exts}`]
   : fs.existsSync('packages')
-  ? glob.sync([`packages/*/src/**/${exts}`], { onlyDirectories: true })
+  ? [`packages/*/src/**/${exts}`]
   : [];
 if (paths.length === 0) {
   console.log('Usage: gda-scripts prettier <path>');

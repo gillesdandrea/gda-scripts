@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable no-nested-ternary */
 
 const fs = require('fs');
 const glob = require('fast-glob');
@@ -10,17 +11,16 @@ const args = process.argv.slice(2);
 const fix = args.findIndex(arg => arg === '--fix') >= 0;
 const files = args.filter(arg => !arg.startsWith('-')); // TODO may mix files and option parameters
 
-// eslint-disable-next-line no-nested-ternary
-const path = fs.existsSync('src')
+const paths = fs.existsSync('src')
   ? ['src']
   : fs.existsSync('packages')
   ? glob.sync(['packages/*/src'], { onlyDirectories: true })
   : [];
-if (path.length === 0) {
+const targets = files.length > 0 ? files : paths;
+if (targets.length === 0) {
   console.log('Usage: gda-scripts eslint <path>');
   return;
 }
-const targets = files.length > 0 ? files : path;
 
 const config = resolveConfig('eslint').filepath;
 // const cache = path.resolve(process.cwd(), './.eslintcache');

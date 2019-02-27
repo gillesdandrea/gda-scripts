@@ -1,12 +1,17 @@
 /* eslint-disable no-console */
 /* eslint-disable no-restricted-syntax */
 
-const glob = require('fast-glob');
+// TODO should support command line for stage-lint i.e. gda-scripts format --prettier-lint <file>
 
 const execute = require('../src/execute');
 const resolveConfig = require('../src/resolveConfig');
+const resolvePaths = require('../src/resolvePaths');
 
 const { config } = resolveConfig('format');
+
+function sortpackagejson(patterns) {
+  return execute('node', [require.resolve(`./sort-package-json`)].concat(patterns), null, false);
+}
 
 function importsort(patterns) {
   return execute('node', [require.resolve(`./import-sort`), '--write'].concat(patterns), null, false);
@@ -24,44 +29,17 @@ function stylelint(patterns) {
   return execute('node', [require.resolve(`./stylelint`), '--fix'].concat(patterns), null, false);
 }
 
-const split = (pattern, suffix = '/') => {
-  if (!pattern || pattern === '.') {
-    return [''];
-  }
-  const tokens = pattern.split(',').filter(token => token);
-  if (tokens.includes('.')) {
-    const ntokens = tokens.filter(token => token !== '.');
-    return ['', ntokens.length === 1 ? `${ntokens[0]}${suffix}` : `{${ntokens.join(',')}}${suffix}`];
-  }
-  return tokens.length === 1 ? [`${tokens[0]}/`] : [`{${tokens.join(',')}}${suffix}`];
-};
-
 const actions = Object.keys(config).map(formatter => {
-  const entries = config[formatter];
-  const patterns = entries.map(entry => {
-    const exts = split(entry.exts, '');
-    const paths = split(entry.paths);
-    const prefixes = split(entry.prefixes);
-    const ppes = [];
-    for (const prefix of prefixes) {
-      for (const path of paths) {
-        for (const ext of exts) {
-          const pattern = `${prefix}${path}${ext}`;
-          if (pattern) {
-            ppes.push(pattern);
-          }
-        }
-      }
-    }
-    return ppes || ['.'];
-  });
-  const epatterns = patterns.reduce((acc, val) => acc.concat(val), []).filter(pattern => glob.sync(pattern).length > 0);
-  return { formatter, patterns: epatterns };
+  const patterns = resolvePaths(formatter, config);
+  return { formatter, patterns };
 });
 
 actions.forEach(action => {
   if (action.patterns.length > 0) {
     switch (action.formatter) {
+      case 'sort-package-json':
+        sortpackagejson(action.patterns);
+        break;
       case 'prettier':
         prettier(action.patterns);
         break;

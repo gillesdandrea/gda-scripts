@@ -1,28 +1,42 @@
+const fs = require('fs');
+const path = require('path');
+
+// TODO look into lerna.json too?
+const pkg = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), './package.json')));
+const prefixes = pkg && pkg.workspaces ? `.,${pkg.workspaces.join(',')}` : '.';
+
 module.exports = {
+  'sort-package-json': [
+    {
+      files: 'package.json',
+      paths: '.',
+      prefixes,
+    },
+  ],
   prettier: [
     {
-      exts: '*.html,*.md,*.json,*.yaml,*.yml',
+      files: '*.html,*.md,*.json,*.yaml,*.yml',
       paths: '.,config,doc',
-      prefixes: '.,packages/*',
+      prefixes,
     },
     {
-      exts: '.*.json,.*.yaml,.*.yml,.*rc',
+      files: '.*.json,.*.yaml,.*.yml,.*rc',
       paths: '.',
-      prefixes: '.,packages/*',
+      prefixes,
     },
   ],
   'prettier-eslint': [
     {
-      exts: '*.js,*.jsx,*.ts,*.tsx,.*.js,.*.ts',
+      files: '*.js,*.jsx,*.ts,*.tsx,.*.js,.*.ts',
       paths: '.,src/**',
-      prefixes: '.,packages/*',
+      prefixes,
     },
   ],
   'prettier-stylelint': [
     {
-      exts: '*.css,*.scss',
+      files: '*.css,*.scss',
       paths: 'src/**',
-      prefixes: '.,packages/*',
+      prefixes,
     },
   ],
 };

@@ -1,4 +1,5 @@
 /* eslint-disable no-console */
+/* eslint-disable no-nested-ternary */
 
 const fs = require('fs');
 // const path = require('path');
@@ -10,21 +11,22 @@ const args = process.argv.slice(2);
 const idx = args.findIndex(arg => arg.startsWith('-'));
 const files = idx >= 0 ? args.slice(0, idx) : args;
 const options = idx >= 0 ? args.slice(idx) : [];
-
-// eslint-disable-next-line no-nested-ternary
-const paths = fs.existsSync('src') ? 'src' : fs.existsSync('packages') ? 'packages/*/src' : null;
-if (paths === null) {
-  console.log('Usage: gda-scripts stylelint <paths>');
-  return;
-}
-
 // const fix = args.findIndex(arg => arg === '--fix') >= 0;
+
+const exts = '*.{css,scss}';
+const paths = fs.existsSync('src') ? 'src' : fs.existsSync('packages') ? 'packages/*/src' : null;
 const targets =
   files.length > 0
     ? files.map(file =>
-        file.includes('*.') || file.includes('.css') || file.includes('.scss') ? file : `${file}/**/*.{css,scss}`
+        file.includes('*.') || file.includes('.css') || file.includes('.scss') ? file : `${file}/**/${exts}`
       )
-    : [`${paths}/**/*.{css,scss}`];
+    : paths
+    ? [`${paths}/**/${exts}`]
+    : [];
+if (targets.length === 0) {
+  console.log('Usage: gda-scripts stylelint <paths>');
+  return;
+}
 
 const config = resolveConfig('stylelint').filepath;
 // const cache = path.join(process.cwd(), './.stylelintcache/');
