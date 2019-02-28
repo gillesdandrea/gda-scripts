@@ -148,9 +148,10 @@ function webpackConfig(
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       mainFields: mainFields.length > 0 ? [...mainFields, 'module', 'browser', 'main'] : undefined,
       modules: [
-        path.resolve(__dirname, '../node_modules'), // in dd-scripts/node_modules
-        path.resolve(__dirname, '../../../node_modules'), // <dir>/node_modules/gda-scripts/config -> <dir>/node_modules
-        'node_modules',
+        path.join(process.cwd(), 'node_modules'), // get peers dependencies from project we compile
+        'node_modules', // get dependencies as usual
+        path.join(process.cwd(), '../../node_modules'), // TODO should be enabled only with workspaces
+        path.join(__dirname, '../node_modules'), // in gda-scripts/node_modules
       ],
       alias,
     },
@@ -188,9 +189,9 @@ function webpackConfig(
               options: {
                 sourceMap: !!sourceMapped,
                 includePaths: [
-                  path.resolve(process.cwd(), './node_modules'),
-                  path.resolve(process.cwd(), '../node_modules'),
-                  path.resolve(process.cwd(), '../../node_modules'), // yarn workspaces move node_modules
+                  'node_modules', // path.join(process.cwd(), 'node_modules'),
+                  path.join(__dirname, '../node_modules'), // in gda-scripts/node_modules
+                  path.join(process.cwd(), '../../node_modules'), // TODO check if we are using workspace
                 ],
               },
             },

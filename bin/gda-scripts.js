@@ -44,6 +44,11 @@ if (fs.existsSync(path.join(__dirname, `../scripts/${script.replace(':', '.')}.j
   process.exit(result.status);
 } else {
   console.log(`${pkg.name}@${pkg.version}`);
-  console.log(`Unknown script "${script}"`);
-  console.log('Perhaps you need to update gda-scripts?');
+  if (script) {
+    console.log(`Unknown script "${script}"`);
+    console.log('Perhaps you need to update gda-scripts?');
+  } else {
+    console.log(`Usage: gda-scripts <script> [args]`);
+    console.log(`Example: gda-scripts eslint`);
+  }
 }
