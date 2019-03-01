@@ -165,7 +165,7 @@ function webpackConfig(
         },
         {
           test: /\.[jt]sx?$/,
-          exclude: /node_modules/,
+          exclude: /node_modules(?!\/.+\/src)/, // will compile `src` even in node_modules
           loader: 'babel-loader',
           options: babelrc(babelHelpers, browserslist),
         },
