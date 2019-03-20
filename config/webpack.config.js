@@ -153,7 +153,14 @@ function webpackConfig(
         path.join(process.cwd(), '../../node_modules'), // TODO should be enabled only with workspaces
         path.join(__dirname, '../node_modules'), // in gda-scripts/node_modules
       ],
-      alias,
+      alias: {
+        ...(dev
+          ? {
+              'react-dom': '@hot-loader/react-dom',
+            }
+          : {}),
+        ...alias,
+      },
     },
     externals: createLibrary ? externals : undefined,
     module: {
