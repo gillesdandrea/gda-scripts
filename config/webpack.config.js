@@ -179,7 +179,9 @@ function webpackConfig(
         {
           test: /\.s?css$/,
           use: [
-            !createLibrary || !extractCSS ? { loader: 'style-loader' } : MiniCssExtractPlugin.loader,
+            !createLibrary || !extractCSS
+              ? { loader: 'style-loader' }
+              : { loader: MiniCssExtractPlugin.loader, options: { publicPath: '' } },
             { loader: 'css-loader', options: { sourceMap: !!sourceMapped } },
             {
               loader: 'postcss-loader',
@@ -214,12 +216,18 @@ function webpackConfig(
         {
           test: /\.(png|jpg|jpeg|gif)$/,
           loader: 'url-loader',
-          options: options.images,
+          options: {
+            name: './images/[name]--[hash:6].[ext]',
+            ...options.images,
+          },
         },
         {
           test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
           loader: 'url-loader',
-          options: options.images,
+          options: {
+            name: './images/[name]--[hash:6].[ext]',
+            ...options.images,
+          },
         },
         {
           test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
@@ -227,6 +235,7 @@ function webpackConfig(
           options: {
             limit: '10000',
             mimetype: 'application/font-woff',
+            name: './fonts/[name]--[hash:6].[ext]',
             ...(options.fonts || {}),
           },
         },
@@ -236,6 +245,7 @@ function webpackConfig(
           options: {
             limit: '10000',
             mimetype: 'application/octet-stream',
+            name: './fonts/[name]--[hash:6].[ext]',
             ...(options.fonts || {}),
           },
         },
@@ -243,6 +253,7 @@ function webpackConfig(
           test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
           loader: 'file-loader',
           options: {
+            name: './fonts/[name]--[hash:6].[ext]',
             ...(options.fonts || {}),
           },
         },
