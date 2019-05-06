@@ -20,6 +20,14 @@ try {
 
 const webpackDevServer = process.argv[1].includes('webpack-dev-server');
 
+const nodeModules = [
+  path.join(process.cwd(), 'node_modules'), // get peers dependencies from project we compile
+  path.join(process.cwd(), '../../node_modules'), // TODO should be enabled only with workspaces
+  path.join(__dirname, '../node_modules'), // in gda-scripts/node_modules
+  'node_modules', // get dependencies as usual
+];
+// console.log(nodeModules);
+
 // TODO babelrc is not based yet based on user one
 const babelrc = (babelHelpers, browsers) => ({
   presets: [
@@ -105,6 +113,7 @@ function webpackConfig(
     console.log('WARNING: Missing webpack-monitor, try `yarn add -D webpack-monitor`');
   }
   if (!storybook) {
+    console.log(`Running from ${process.cwd()}`);
     console.log({
       server,
       mode: process.env.NODE_ENV,
@@ -147,18 +156,14 @@ function webpackConfig(
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx'],
       mainFields: mainFields.length > 0 ? [...mainFields, 'module', 'browser', 'main'] : undefined,
-      modules: [
-        path.join(process.cwd(), 'node_modules'), // get peers dependencies from project we compile
-        'node_modules', // get dependencies as usual
-        path.join(process.cwd(), '../../node_modules'), // TODO should be enabled only with workspaces
-        path.join(__dirname, '../node_modules'), // in gda-scripts/node_modules
-      ],
+      modules: nodeModules,
       alias: {
-        ...(dev
-          ? {
-              'react-dom': '@hot-loader/react-dom',
-            }
-          : {}),
+        // TODO may fail if not present
+        // ...(dev
+        //   ? {
+        //       'react-dom': '@hot-loader/react-dom',
+        //     }
+        //   : {}),
         ...alias,
       },
     },
@@ -181,7 +186,10 @@ function webpackConfig(
           use: [
             !createLibrary || !extractCSS
               ? { loader: 'style-loader' }
-              : { loader: MiniCssExtractPlugin.loader, options: { publicPath: '' } },
+              : {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: { publicPath: (options.css && options.css.publicPath) || './' },
+                },
             { loader: 'css-loader', options: { sourceMap: !!sourceMapped } },
             {
               loader: 'postcss-loader',
@@ -197,11 +205,7 @@ function webpackConfig(
               loader: 'sass-loader',
               options: {
                 sourceMap: !!sourceMapped,
-                includePaths: [
-                  'node_modules', // path.join(process.cwd(), 'node_modules'),
-                  path.join(__dirname, '../node_modules'), // in gda-scripts/node_modules
-                  path.join(process.cwd(), '../../node_modules'), // TODO check if we are using workspace
-                ],
+                includePaths: nodeModules,
               },
             },
             {
