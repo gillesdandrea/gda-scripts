@@ -46,7 +46,7 @@
     semver "^5.4.1"
     source-map "^0.5.0"
 
-"@babel/core@7.4.4", "@babel/core@>=7.1.0", "@babel/core@^7.2.2", "@babel/core@^7.4.3", "@babel/core@^7.4.4":
+"@babel/core@>=7.1.0", "@babel/core@^7.2.2", "@babel/core@^7.4.3", "@babel/core@^7.4.4":
   version "7.4.4"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.4.4.tgz#84055750b05fcd50f9915a826b44fa347a825250"
   integrity sha512-lQgGX3FPRgbz2SKmhMtYgJvVzGZrmjaF4apZ2bLwofAKiSjxU0drPh4S/VasyYXwaTs+A1gvQ45BN8SQJzHsQQ==
@@ -1295,6 +1295,16 @@
     loader-utils "^1.1.0"
     require-from-string "^2.0.2"
     typescript "^3.3.3"
+
+"@hot-loader/react-dom@^16.8.6":
+  version "16.8.6"
+  resolved "https://registry.yarnpkg.com/@hot-loader/react-dom/-/react-dom-16.8.6.tgz#7923ba27db1563a7cc48d4e0b2879a140df461ea"
+  integrity sha512-+JHIYh33FVglJYZAUtRjfT5qZoT2mueJGNzU5weS2CVw26BgbxGKSujlJhO85BaRbg8sqNWyW1hYBILgK3ZCgA==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+    scheduler "^0.13.6"
 
 "@icons/material@^0.2.4":
   version "0.2.4"
@@ -2582,10 +2592,10 @@ babel-plugin-transform-undefined-to-void@^6.9.4:
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-undefined-to-void/-/babel-plugin-transform-undefined-to-void-6.9.4.tgz#be241ca81404030678b748717322b89d0c8fe280"
   integrity sha1-viQcqBQEAwZ4t0hxcyK4nQyP4oA=
 
-babel-preset-gda@^0.3.1:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/babel-preset-gda/-/babel-preset-gda-0.3.2.tgz#36eaf0b54086abbf1facdf6c061034ebdec872b5"
-  integrity sha512-SANV2QRlk6++uGyTr4DtdeRIpCbFGccHeNJZQUbzEMY7pc3z3HDnDQVKLWoRhNDW6uwy1PayQ20lZxGu36avkg==
+babel-preset-gda@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/babel-preset-gda/-/babel-preset-gda-0.3.3.tgz#b1d8afd0edac7940128285479684c01bdc8d4513"
+  integrity sha512-SdFlFFO4gc5fwQTBTD15ad5OL+qIkqcVEmsDiZT/d8hnDiPbOzoRz9BYf0B6z3fzl8X5Qn9+AnXbua/w5v6JIA==
   dependencies:
     "@babel/plugin-proposal-class-properties" "^7.4.4"
     "@babel/plugin-proposal-decorators" "^7.4.4"
@@ -5244,10 +5254,10 @@ gaze@^1.0.0:
   dependencies:
     globule "^1.0.0"
 
-gda-scripts@0.1.14:
-  version "0.1.14"
-  resolved "https://registry.yarnpkg.com/gda-scripts/-/gda-scripts-0.1.14.tgz#226ae389b1264b6260f49a81c67a9e665737480c"
-  integrity sha512-9ls8zbGAYxXCADk5xaKUJ+KM3VC2drfUyd3buCN1WP2/OWORxFNd/iYD6Sn8Rmc0fuELlXQLXp03bZHgMSTCAA==
+gda-scripts@0.1.15:
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/gda-scripts/-/gda-scripts-0.1.15.tgz#2894c05319eb1ec2a15c8e1940d7a7ba2b15d67f"
+  integrity sha512-WXRWYjWUZ89IdlBW6aYGexH6cwg/6JFZMyKiMs1rhp3JoF7eAF/BQWKKyKp14O8vPFihNXxgZlfDgbdCilJlkg==
   dependencies:
     "@babel/cli" "^7.4.4"
     "@babel/core" "^7.4.4"
@@ -5268,9 +5278,10 @@ gda-scripts@0.1.14:
     autoprefixer "^9.5.1"
     babel-eslint "^10.0.1"
     babel-loader "^8.0.6"
-    babel-preset-gda "^0.3.1"
+    babel-preset-gda "^0.3.3"
     chalk "^2.4.2"
     copy-webpack-plugin "^5.0.3"
+    core-js "^3.0.1"
     cosmiconfig "^5.2.1"
     css-loader "^2.1.1"
     cssnano "^4.1.10"
