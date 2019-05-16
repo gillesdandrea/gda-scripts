@@ -35,12 +35,12 @@ const babelrc = (babelHelpers, browsers) => ({
       'gda',
       {
         modules: false,
+        transformRuntime: babelHelpers,
         targets: { browsers },
         // debug: true,
       },
     ],
   ],
-  plugins: babelHelpers ? ['@babel/plugin-transform-runtime'] : undefined,
 });
 // const browserslistrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, './.browserslistrc'))).browserslist;
 const browserslistrc = resolveConfig('browserslist').config.browserslist;

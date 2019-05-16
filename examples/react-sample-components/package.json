@@ -1,0 +1,35 @@
+{
+  "name": "react-sample-components",
+  "version": "0.0.0",
+  "private": true,
+  "description": "React Sample Componenents",
+  "license": "MIT",
+  "author": "Gilles d'Andréa (https://github.com/gillesdandrea)",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "dist/react-sample-components.js",
+  "module": "dist/react-sample-components.js",
+  "source": "src/index.js",
+  "style": "dist/react-sample-components.css",
+  "scripts": {
+    "build": "gda-scripts webpack lib",
+    "build:storybook": "gda-scripts build-storybook",
+    "start": "gda-scripts storybook",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "gda-scripts": "0.1.15",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
+  }
+}
