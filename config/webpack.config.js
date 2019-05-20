@@ -154,7 +154,7 @@ function webpackConfig(
     devtool: sourceMapped === true ? 'source-map' : sourceMapped || false,
     optimization: { minimize },
     resolve: {
-      extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       mainFields: mainFields.length > 0 ? [...mainFields, 'module', 'browser', 'main'] : undefined,
       modules: nodeModules,
       alias: {
