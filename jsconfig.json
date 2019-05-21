@@ -7,5 +7,5 @@
     "checkJs": false,
     "jsx": "preserve"
   },
-  "include": ["bin/**/*", "config/**/*", "scripts/**/*"]
+  "include": ["bin/**/*", "config/**/*", "scripts/**/*", "src/**/*"]
 }

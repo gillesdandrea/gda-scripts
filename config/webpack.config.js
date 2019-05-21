@@ -29,7 +29,7 @@ const nodeModules = [
 // console.log(nodeModules);
 
 // TODO babelrc is not based yet based on user one
-const babelrc = (babelHelpers, browsers) => ({
+const babelrc = ({ babelHelpers, browsers, babelPlugins }) => ({
   presets: [
     [
       'gda',
@@ -37,10 +37,12 @@ const babelrc = (babelHelpers, browsers) => ({
         modules: false,
         transformRuntime: babelHelpers,
         targets: { browsers },
+        corejs: 2,
         // debug: true,
       },
     ],
   ],
+  plugins: babelPlugins,
 });
 // const browserslistrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, './.browserslistrc'))).browserslist;
 const browserslistrc = resolveConfig('browserslist').config.browserslist;
@@ -83,6 +85,7 @@ function webpackConfig(
     // babel = babelrc,
     browserslist = browserslistrc,
     babelHelpers = false,
+    babelPlugins = undefined,
     define = {},
     sassDefine = {},
     options = {},
@@ -96,6 +99,9 @@ function webpackConfig(
     headers = undefined,
     monitor = false,
     mainFields = [],
+    //
+    rules = [],
+    plugins = [],
   } = {}
 ) {
   // eslint-disable-next-line no-param-reassign
@@ -179,7 +185,7 @@ function webpackConfig(
           test: /\.[jt]sx?$/,
           exclude: /node_modules(?!\/.+\/src)/, // will compile `src` even in node_modules
           loader: 'babel-loader',
-          options: babelrc(babelHelpers, browserslist),
+          options: babelrc({ babelHelpers, browserslist, babelPlugins }),
         },
         {
           test: /\.s?css$/,
@@ -261,6 +267,7 @@ function webpackConfig(
             ...(options.fonts || {}),
           },
         },
+        ...rules,
       ].filter(Boolean),
     },
     plugins: [
@@ -316,6 +323,8 @@ function webpackConfig(
           filename: `${outputName}.css`,
           chunkFilename: `${outputName}-[name].css`,
         }),
+
+      ...plugins,
     ].filter(Boolean),
     devServer: server
       ? {

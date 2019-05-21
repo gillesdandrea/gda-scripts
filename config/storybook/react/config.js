@@ -1,12 +1,11 @@
 import React from 'react';
 
+import { withKnobs } from '@storybook/addon-knobs/react';
 // import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import { addParameters, addDecorator, configure } from '@storybook/react';
+import { addDecorator, addParameters, configure } from '@storybook/react';
 import { create } from '@storybook/theming';
 
-const NAME = '@ibm/gantt-chart'; // eslint-disable-line
-const VERSION = '0.5.0'; // eslint-disable-line
-const REPOSITORY = 'N/A'; // eslint-disable-line
+addDecorator(withKnobs);
 
 addParameters({
   options: {

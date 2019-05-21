@@ -1,0 +1,29 @@
+{
+  "name": "js-sample-lib",
+  "version": "0.0.0",
+  "private": true,
+  "description": "JavaScript Sample Lib",
+  "license": "MIT",
+  "author": "Gilles d'Andréa (https://github.com/gillesdandrea)",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "dist/js-sample-lib.js",
+  "module": "dist/js-sample-lib.js",
+  "source": "src/index.js",
+  "style": "dist/js-sample-lib.css",
+  "scripts": {
+    "build": "gda-scripts webpack lib",
+    "build:storybook": "gda-scripts build-storybook-html",
+    "start": "gda-scripts storybook-html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "gda-scripts": "0.2.2"
+  },
+  "peerDependencies": {
+  }
+}

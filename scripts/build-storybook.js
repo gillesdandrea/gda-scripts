@@ -2,7 +2,7 @@ const path = require('path');
 
 const execute = require('../src/execute');
 
-const configDir = path.resolve(__dirname, '../config/storybook');
+const configDir = path.resolve(__dirname, '../config/storybook/react');
 
 const args = process.argv.slice(2);
 const port = args.includes('-o') || args.includes('--output-dir') ? [] : ['-o', 'storybook'];
