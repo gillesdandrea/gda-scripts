@@ -35,6 +35,7 @@ const babelrc = (babelHelpers, browsers) => ({
       'gda',
       {
         modules: false,
+        corejs: 2,
         transformRuntime: babelHelpers,
         targets: { browsers },
         // debug: true,

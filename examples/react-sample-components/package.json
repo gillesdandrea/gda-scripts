@@ -2,7 +2,7 @@
   "name": "react-sample-components",
   "version": "0.0.0",
   "private": true,
-  "description": "React Sample Componenents",
+  "description": "React Sample Components",
   "license": "MIT",
   "author": "Gilles d'Andréa (https://github.com/gillesdandrea)",
   "files": [
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^16.8.6",
-    "gda-scripts": "0.1.15",
+    "gda-scripts": "*",
     "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
