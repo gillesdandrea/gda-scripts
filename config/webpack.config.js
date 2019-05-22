@@ -57,7 +57,8 @@ const DEFAULT_ROOTS = {
 // note: lodash/isEqual will not be externalized, see https://webpack.js.org/guides/author-libraries/
 function getExternals(dependencies = {}, roots = {}) {
   const combinedRoots = { ...DEFAULT_ROOTS, ...roots };
-  const externals = Object.keys(dependencies).map(name => ({
+  const combinedDependencies = { ...roots, ...dependencies };
+  const externals = Object.keys(combinedDependencies).map(name => ({
     [name]: {
       root: combinedRoots[name],
       commonjs2: name,
@@ -75,6 +76,7 @@ function webpackConfig(
     input = './src/index',
     outputPath = './dist',
     outputName = undefined, // use pkg.name
+    outputSuffix = '', // i.e. '.min'
     publicPath = undefined,
     library = undefined, // use pkg.name
     format = 'umd',
@@ -114,7 +116,7 @@ function webpackConfig(
   process.env.DEBUG = process.env.DEBUG || !!(debug === undefined ? dev : debug);
   const minimized = !!(minimize === undefined ? !dev : minimize);
   const sourceMapped = sourcemap === undefined ? !!dev : sourcemap;
-  outputName = outputName || pkg.name.substring(pkg.name.indexOf('/') + 1); // eslint-disable-line no-param-reassign
+  outputName = (outputName || pkg.name.substring(pkg.name.indexOf('/') + 1)) + outputSuffix; // eslint-disable-line no-param-reassign
   if (createLibrary && monitor && !WebpackMonitor) {
     console.log('WARNING: Missing webpack-monitor, try `yarn add -D webpack-monitor`');
   }
@@ -127,7 +129,9 @@ function webpackConfig(
       createLibrary,
       minimized,
       sourceMapped,
+      input,
       outputName,
+      externals: externals.map(external => Object.keys(external)[0]),
     });
   }
   const config = {
@@ -188,7 +192,7 @@ function webpackConfig(
           options: babelrc({ babelHelpers, browserslist, babelPlugins }),
         },
         {
-          test: /\.s?css$/,
+          test: /\.scss$/,
           use: [
             !createLibrary || !extractCSS
               ? { loader: 'style-loader' }
@@ -219,6 +223,28 @@ function webpackConfig(
               options: {
                 syntax: 'scss',
                 vars: sassDefine,
+              },
+            },
+          ],
+        },
+        {
+          test: /\.css$/,
+          use: [
+            !createLibrary || !extractCSS
+              ? { loader: 'style-loader' }
+              : {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: { publicPath: (options.css && options.css.publicPath) || './' },
+                },
+            { loader: 'css-loader', options: { sourceMap: !!sourceMapped } },
+            {
+              loader: 'postcss-loader',
+              options: {
+                config: {
+                  ctx: { browsers: browserslist, minimize: minimized },
+                  path: path.resolve(__dirname, './postcss.config.js'),
+                },
+                sourceMap: !!sourceMapped,
               },
             },
           ],

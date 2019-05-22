@@ -1,6 +1,6 @@
 {
   "name": "gda-scripts",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "CLI toolbox for common scripts used in GdA web projects",
   "bugs": {
     "url": "https://github.ibm.com/gillesdandrea/gda-scripts/issues"
@@ -22,18 +22,18 @@
     "gda-scripts": "./bin/gda-scripts.js"
   },
   "scripts": {
-    "prettier:fix": "prettier --write {bin,config,scripts,src}/**/*.{js,jsx,css,scss,json,md}"
+    "prettier:fix": "prettier --write {bin,config,scripts,src,examples}/**/*.{js,jsx,css,scss,json,md}"
   },
   "dependencies": {
     "@babel/cli": "^7.4.4",
-    "@babel/core": "^7.4.4",
+    "@babel/core": "^7.4.5",
     "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
-    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-env": "^7.4.5",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
-    "@babel/runtime": "^7.4.4",
-    "@babel/runtime-corejs2": "^7.4.4",
+    "@babel/runtime": "^7.4.5",
+    "@babel/runtime-corejs2": "^7.4.5",
     "@epegzz/sass-vars-loader": "^4.3.1",
     "@storybook/addon-actions": "^5.0.11",
     "@storybook/addon-info": "^5.0.11",
@@ -50,7 +50,7 @@
     "babel-preset-gda": "^0.3.4",
     "chalk": "^2.4.2",
     "copy-webpack-plugin": "^5.0.3",
-    "core-js": "^2.6.7",
+    "core-js": "^2.6.8",
     "cosmiconfig": "^5.2.1",
     "css-loader": "^2.1.1",
     "cssnano": "^4.1.10",
@@ -93,7 +93,7 @@
     "stylelint-prettier": "^1.1.0",
     "stylelint-scss": "^3.6.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.32.0",
+    "webpack": "^4.32.1",
     "webpack-cli": "^3.3.2",
     "webpack-dev-server": "^3.4.1"
   },

@@ -37,9 +37,13 @@ module.exports = async ({ config, mode }) => {
     module: {
       ...(config.module || {}),
       rules: [
-        // keep scss and babel loader
-        ...(custom.module.rules || []).filter(rule => '.scss'.match(rule.test) || rule.loader === 'babel-loader'),
-        ...(config.module.rules || []).filter(rule => rule.loader !== 'babel-loader'),
+        // keep (s)css and babel loader
+        ...(custom.module.rules || []).filter(
+          rule => '.scss'.match(rule.test) || '.css'.match(rule.test) || rule.loader === 'babel-loader'
+        ),
+        ...(config.module.rules || []).filter(
+          rule => '.scss'.match(rule.test) && '.css'.match(rule.test) && rule.loader !== 'babel-loader'
+        ),
         {
           test: /[.-]stor(y|ies)\.jsx?$/,
           loaders: [require.resolve('@storybook/addon-storysource/loader')],
