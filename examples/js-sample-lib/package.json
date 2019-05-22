@@ -22,7 +22,7 @@
   "dependencies": {
   },
   "devDependencies": {
-    "gda-scripts": "0.2.2"
+    "gda-scripts": "*"
   },
   "peerDependencies": {
   }
