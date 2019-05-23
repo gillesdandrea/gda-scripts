@@ -16,10 +16,12 @@
   "scripts": {
     "build": "gda-scripts webpack lib",
     "build:storybook": "gda-scripts build-storybook",
-    "start": "gda-scripts storybook",
+    "start": "gda-scripts webpack-dev-server dev",
+    "storybook": "gda-scripts storybook",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4"
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^16.8.6",

@@ -131,25 +131,12 @@ function webpackConfig(
       sourceMapped,
       input,
       outputName,
-      externals: externals.map(external => Object.keys(external)[0]),
+      externals: createLibrary ? externals.map(external => Object.keys(external)[0]) : undefined,
     });
   }
   const config = {
     mode: storybook ? undefined : process.env.NODE_ENV,
-    entry: storybook
-      ? undefined
-      : [
-          // bundle the client for webpack-dev-server
-          // and connect to the provided endpoint
-          server && `webpack-dev-server/client?${https ? 'https' : 'http'}://localhost:${port}`,
-
-          // bundle the client for hot reloading
-          // only- means to only hot reload for successful updates
-          server && 'webpack/hot/only-dev-server',
-
-          // the entry point of our app
-          input,
-        ].filter(Boolean),
+    entry: storybook ? undefined : input,
     output: storybook
       ? undefined
       : {
@@ -162,7 +149,7 @@ function webpackConfig(
           publicPath: createLibrary ? publicPath : undefined,
         },
     devtool: sourceMapped === true ? 'source-map' : sourceMapped || false,
-    optimization: { minimize },
+    optimization: minimize ? { minimize } : undefined,
     resolve: {
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       mainFields: mainFields.length > 0 ? [...mainFields, 'module', 'browser', 'main'] : undefined,
@@ -194,12 +181,13 @@ function webpackConfig(
         {
           test: /\.scss$/,
           use: [
-            !createLibrary || !extractCSS
-              ? { loader: 'style-loader' }
-              : {
-                  loader: MiniCssExtractPlugin.loader,
-                  options: { publicPath: (options.css && options.css.publicPath) || './' },
-                },
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: (options.css && options.css.publicPath) || './',
+                hmr: server,
+              },
+            },
             { loader: 'css-loader', options: { sourceMap: !!sourceMapped } },
             {
               loader: 'postcss-loader',
@@ -230,12 +218,13 @@ function webpackConfig(
         {
           test: /\.css$/,
           use: [
-            !createLibrary || !extractCSS
-              ? { loader: 'style-loader' }
-              : {
-                  loader: MiniCssExtractPlugin.loader,
-                  options: { publicPath: (options.css && options.css.publicPath) || './' },
-                },
+            {
+              loader: MiniCssExtractPlugin.loader,
+              options: {
+                publicPath: (options.css && options.css.publicPath) || './',
+                hmr: server,
+              },
+            },
             { loader: 'css-loader', options: { sourceMap: !!sourceMapped } },
             {
               loader: 'postcss-loader',
@@ -342,13 +331,11 @@ function webpackConfig(
 
       new CopyWebpackPlugin(copy),
 
-      createLibrary &&
-        extractCSS &&
-        new MiniCssExtractPlugin({
-          path: path.resolve(process.cwd(), outputPath),
-          filename: `${outputName}.css`,
-          chunkFilename: `${outputName}-[name].css`,
-        }),
+      new MiniCssExtractPlugin({
+        path: path.resolve(process.cwd(), outputPath),
+        filename: `${outputName}.css`,
+        chunkFilename: `${outputName}-[name].css`,
+      }),
 
       ...plugins,
     ].filter(Boolean),
@@ -364,6 +351,7 @@ function webpackConfig(
           historyApiFallback: false,
 
           // enable HMR on the server
+          inline: true,
           hot: true,
         }
       : undefined,
