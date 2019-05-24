@@ -1,12 +1,14 @@
 /* eslint-disable import/no-extraneous-dependencies */
-const webpackConfig = require('gda-scripts/config/webpack.config');
+const configure = require('gda-scripts/config/webpack.configure');
 const pkg = require('./package.json');
 
-module.exports = webpackConfig(pkg, {
+module.exports = configure(pkg, {
   mode: 'production',
   react: false,
   sourcemap: true,
   minimize: false,
-  babelHelpers: true,
+  babel: {
+    helpers: true,
+  },
   monitor: false,
 });

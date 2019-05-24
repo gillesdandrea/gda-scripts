@@ -6,6 +6,8 @@ module.exports = webpackConfig(pkg, {
   mode: 'production',
   sourcemap: true,
   minimize: false,
-  babelHelpers: true,
+  babel: {
+    helpers: true,
+  },
   monitor: false,
 });

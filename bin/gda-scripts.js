@@ -40,7 +40,7 @@ if (fs.existsSync(path.join(__dirname, `../scripts/${script.replace(':', '.')}.j
     process.exit(1);
   }
   const duration = ((Date.now() - startTime) / 1000).toFixed(2);
-  console.log(`✨  Done in ${duration}s.`); // TODO use chalk
+  console.log(`✨  Done in ${duration}s. ${pkg.name}@${pkg.version}`); // TODO use chalk
   process.exit(result.status);
 } else {
   console.log(`${pkg.name}@${pkg.version}`);

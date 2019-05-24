@@ -1,6 +1,6 @@
 {
   "name": "gda-scripts",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "CLI toolbox for common scripts used in GdA web projects",
   "bugs": {
     "url": "https://github.ibm.com/gillesdandrea/gda-scripts/issues"
