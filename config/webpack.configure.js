@@ -29,6 +29,28 @@ const nodeModules = [
 ];
 // console.log(nodeModules);
 
+const DEFAULT_ROOTS = {
+  lodash: '_',
+  react: 'React',
+  'react-dom': 'ReactDOM',
+  'prop-types': 'PropTypes',
+};
+
+// note: lodash/isEqual will not be externalized, see https://webpack.js.org/guides/author-libraries/
+function getExternals(peers = {}, externalRoots = {}) {
+  const combinedRoots = { ...DEFAULT_ROOTS, ...externalRoots };
+  const combinedDependencies = { ...externalRoots, ...peers }; // cheap set to avoid duplicates
+  const externals = Object.keys(combinedDependencies).map(name => ({
+    [name]: {
+      root: combinedRoots[name],
+      commonjs2: name,
+      commonjs: name,
+      amd: name,
+    },
+  }));
+  return externals;
+}
+
 const getOutputName = pkg => (pkg.name ? pkg.name.substring(pkg.name.indexOf('/') + 1) : 'bundle');
 
 const getConfig = (pkg, { webpack = {}, babel = {}, styling = {}, server = {}, html = {}, ...config }) => ({
@@ -56,13 +78,14 @@ const getConfig = (pkg, { webpack = {}, babel = {}, styling = {}, server = {}, h
       alias: (webpack.resolve && webpack.resolve.alias) || {},
     },
     optimization: webpack.optimization || undefined,
-    externals: webpack.externals || {},
+    externals: getExternals(pkg.peerDependencies, webpack.externals) || {},
     define: webpack.define || {},
     modules: {
       rules: [],
       ...(webpack.modules || {}),
     },
     plugins: webpack.plugins || [],
+    // copy: webpack.copy,
   },
   //
   babel: {
@@ -132,31 +155,8 @@ const getBabelConfig = ({ browserslist, babel }) => ({
   plugins: babel.plugins,
 });
 
-const DEFAULT_ROOTS = {
-  lodash: '_',
-  react: 'React',
-  'react-dom': 'ReactDOM',
-  'prop-types': 'PropTypes',
-};
-
-// note: lodash/isEqual will not be externalized, see https://webpack.js.org/guides/author-libraries/
-function getExternals(peers = {}, externalRoots = {}) {
-  const combinedRoots = { ...DEFAULT_ROOTS, ...externalRoots };
-  const combinedDependencies = { ...externalRoots, ...peers }; // cheap set to avoid duplicates
-  const externals = Object.keys(combinedDependencies).map(name => ({
-    [name]: {
-      root: combinedRoots[name],
-      commonjs2: name,
-      commonjs: name,
-      amd: name,
-    },
-  }));
-  return externals;
-}
-
 function webpackConfigure(pkg, cfg) {
   const c = getConfig(pkg, cfg);
-  const externals = getExternals(pkg.peerDependencies, c.externals);
   const storybook = c.mode === 'storybook';
   const server = webpackDevServer;
   const createLibrary = !server && !storybook;
@@ -179,7 +179,7 @@ function webpackConfigure(pkg, cfg) {
       sourcemap,
       input: c.input,
       outputName: `${c.outputName}${c.outputSuffix}`,
-      externals: createLibrary ? externals.map(external => Object.keys(external)[0]) : undefined,
+      externals: createLibrary ? c.webpack.externals.map(external => Object.keys(external)[0]) : undefined,
     });
   }
   const babel = getBabelConfig(c);
@@ -200,6 +200,7 @@ function webpackConfigure(pkg, cfg) {
     devtool: sourcemap === true ? 'source-map' : sourcemap || false,
     optimization: c.minimize !== undefined ? { minimize: minimized, ...optimization } : optimization,
     resolve,
+    externals: c.webpack.externals,
     module: {
       rules: [
         sourcemap && {
@@ -354,7 +355,7 @@ function webpackConfigure(pkg, cfg) {
     ].filter(Boolean),
     devServer: server ? c.server : undefined,
   };
-  // console.log(config);
+  // console.log(JSON.stringify(config, null, 2));
   return config;
 }
 
