@@ -1,6 +1,6 @@
 {
   "name": "gda-scripts",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "CLI toolbox for common scripts used in GdA web projects",
   "bugs": {
     "url": "https://github.ibm.com/gillesdandrea/gda-scripts/issues"
@@ -29,6 +29,7 @@
     "@babel/core": "^7.4.5",
     "@babel/plugin-external-helpers": "^7.2.0",
     "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.5",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.0.0",
@@ -50,7 +51,7 @@
     "babel-preset-gda": "^0.3.4",
     "chalk": "^2.4.2",
     "copy-webpack-plugin": "^5.0.3",
-    "core-js": "^2.6.8",
+    "core-js": "^2.6.9",
     "cosmiconfig": "^5.2.1",
     "css-loader": "^2.1.1",
     "cssnano": "^4.1.10",
@@ -59,7 +60,7 @@
     "eslint-config-gda": "^0.2.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-plugin-flowtype": "3.9.1",
-    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-react": "^7.13.0",
@@ -70,7 +71,7 @@
     "import-sort-cli": "^6.0.0",
     "import-sort-parser-babylon": "^6.0.0",
     "import-sort-style-gda": "^2.2.0",
-    "mini-css-extract-plugin": "^0.6.0",
+    "mini-css-extract-plugin": "^0.7.0",
     "node-sass": "^4.12.0",
     "npm-which": "^3.0.1",
     "postcss-loader": "^3.0.0",

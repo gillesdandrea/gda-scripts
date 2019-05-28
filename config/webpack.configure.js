@@ -36,6 +36,16 @@ const DEFAULT_ROOTS = {
   'prop-types': 'PropTypes',
 };
 
+const storybookBabelPlugins = [
+  // TODO maybe some plugins below should be in core gda-scripts
+  // as seen in https://github.com/storybooks/storybook/blob/next/examples/official-storybook/webpack.config.js
+  ['babel-plugin-emotion', { sourceMap: true, autoLabel: true }],
+  'babel-plugin-macros',
+  '@babel/plugin-transform-react-constant-elements',
+  'babel-plugin-add-react-displayname',
+  ['babel-plugin-react-docgen', { DOC_GEN_COLLECTION_NAME: 'STORYBOOK_REACT_CLASSES' }],
+];
+
 // note: lodash/isEqual will not be externalized, see https://webpack.js.org/guides/author-libraries/
 function getExternals(peers = {}, externalRoots = {}) {
   const combinedRoots = { ...DEFAULT_ROOTS, ...externalRoots };
@@ -92,7 +102,7 @@ const getConfig = (pkg, { webpack = {}, babel = {}, styling = {}, server = {}, h
     corejs: babel.corejs || 2,
     helpers: babel.helpers || false,
     presets: babel.presets,
-    plugins: babel.plugins,
+    plugins: config.mode === 'storybook' ? [...(babel.plugins || []), ...storybookBabelPlugins] : babel.plugins,
   },
   //
   styling: {
@@ -168,7 +178,7 @@ function webpackConfigure(pkg, cfg) {
   if (createLibrary && c.monitor && !WebpackMonitor) {
     console.log('WARNING: Missing webpack-monitor, try `yarn add -D webpack-monitor`');
   }
-  if (!storybook) {
+  if (!storybook && !cfg['print-config']) {
     console.log(`Running from ${process.cwd()}`);
     console.log({
       server,
@@ -200,7 +210,7 @@ function webpackConfigure(pkg, cfg) {
     devtool: sourcemap === true ? 'source-map' : sourcemap || false,
     optimization: c.minimize !== undefined ? { minimize: minimized, ...optimization } : optimization,
     resolve,
-    externals: c.webpack.externals,
+    externals: createLibrary ? c.webpack.externals : undefined,
     module: {
       rules: [
         sourcemap && {
@@ -355,7 +365,9 @@ function webpackConfigure(pkg, cfg) {
     ].filter(Boolean),
     devServer: server ? c.server : undefined,
   };
-  // console.log(JSON.stringify(config, null, 2));
+  if (cfg['print-config']) {
+    console.log(JSON.stringify(config, null, 2));
+  }
   return config;
 }
 
