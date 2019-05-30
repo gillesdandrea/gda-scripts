@@ -3,8 +3,8 @@ const configure = require('gda-scripts/config/webpack.configure');
 const pkg = require('./package.json');
 
 module.exports = configure(pkg, {
+  // 'print-config': true,
   mode: 'production',
-  react: false,
   sourcemap: true,
   minimize: false,
   babel: {
