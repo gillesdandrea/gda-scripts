@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 
 import './Hello.scss';
 
-export default class Hello extends React.PureComponent {
-  static propTypes = {
-    name: PropTypes.string,
-  };
+const propTypes = {
+  name: PropTypes.string,
+};
 
-  static defaultProps = {
-    name: 'World',
-  };
+const defaultProps = {
+  name: 'World',
+};
 
-  render() {
-    const { name } = this.props;
-    return <div className="hello">Hello {name}!</div>;
-  }
-}
+const Hello = ({ name }) => <div className="hello">Hello {name}!</div>;
+
+Hello.propTypes = propTypes;
+Hello.defaultProps = defaultProps;
+
+export default Hello;
