@@ -1,6 +1,6 @@
 {
   "name": "gda-scripts",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "CLI toolbox for common scripts used in GdA web projects",
   "bugs": {
     "url": "https://github.ibm.com/gillesdandrea/gda-scripts/issues"
@@ -40,7 +40,7 @@
     "@storybook/addon-info": "^5.0.11",
     "@storybook/addon-knobs": "^5.0.11",
     "@storybook/addon-links": "^5.0.11",
-    "@storybook/addon-storysource": "5.0.11",
+    "@storybook/addon-storysource": "^5.0.11",
     "@storybook/addon-viewport": "^5.0.11",
     "@storybook/html": "^5.0.11",
     "@storybook/react": "^5.0.11",
@@ -48,7 +48,7 @@
     "autoprefixer": "^9.5.1",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.6",
-    "babel-preset-gda": "^0.3.4",
+    "babel-preset-gda": "^0.3.5",
     "chalk": "^2.4.2",
     "copy-webpack-plugin": "^5.0.3",
     "core-js": "^2.6.9",
@@ -59,7 +59,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-gda": "^0.2.0",
     "eslint-config-prettier": "^4.3.0",
-    "eslint-plugin-flowtype": "3.9.1",
+    "eslint-plugin-flowtype": "^3.9.1",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-prettier": "^3.1.0",
@@ -91,12 +91,12 @@
     "stylelint-config-recommended-scss": "^3.3.0",
     "stylelint-config-standard": "^18.3.0",
     "stylelint-order": "^3.0.0",
-    "stylelint-prettier": "^1.1.0",
-    "stylelint-scss": "^3.6.1",
+    "stylelint-prettier": "^1.1.1",
+    "stylelint-scss": "^3.8.0",
     "url-loader": "^1.1.2",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.4.1"
+    "webpack-dev-server": "^3.5.0"
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^16.4.0",

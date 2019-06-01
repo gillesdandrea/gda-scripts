@@ -9,6 +9,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HtmlWebpackTemplate = require('html-webpack-template');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const resolveConfig = require('../src/resolveConfig');
+const isMonorepo = require('../src/isMonorepo');
 
 let WebpackMonitor = null;
 try {
@@ -21,20 +22,15 @@ try {
 // do we use webpack or webpack-dev-server?
 const webpackDevServer = process.argv[1].includes('webpack-dev-server');
 
+const monorepo = isMonorepo(process.cwd());
+
 const nodeModules = [
   path.join(process.cwd(), 'node_modules'), // get peers dependencies from project we compile
-  path.join(process.cwd(), '../../node_modules'), // TODO should be enabled only with workspaces
+  monorepo && path.join(process.cwd(), '../../node_modules'), // in monorepo shared node_modules
   path.join(__dirname, '../node_modules'), // in gda-scripts/node_modules
   'node_modules', // get dependencies as usual
-];
+].filter(Boolean);
 // console.log(nodeModules);
-
-const DEFAULT_ROOTS = {
-  lodash: '_',
-  react: 'React',
-  'react-dom': 'ReactDOM',
-  'prop-types': 'PropTypes',
-};
 
 const storybookBabelPlugins = [
   // TODO maybe some plugins below should be in core gda-scripts
@@ -45,6 +41,32 @@ const storybookBabelPlugins = [
   'babel-plugin-add-react-displayname',
   ['babel-plugin-react-docgen', { DOC_GEN_COLLECTION_NAME: 'STORYBOOK_REACT_CLASSES' }],
 ];
+
+// TODO babelrc is not (yet) based on user one
+const getBabelConfig = ({ browserslist, babel }) => ({
+  // rootMode: babel.rootMode,
+  presets: babel.presets || [
+    [
+      'gda',
+      {
+        corejs: babel.corejs,
+        modules: false,
+        transformRuntime: babel.helpers,
+        targets: { browsers: browserslist },
+        debug: babel.debug,
+      },
+    ],
+  ],
+  plugins: babel.plugins,
+  babelrc: false,
+});
+
+const DEFAULT_ROOTS = {
+  lodash: '_',
+  react: 'React',
+  'react-dom': 'ReactDOM',
+  'prop-types': 'PropTypes',
+};
 
 // note: lodash/isEqual will not be externalized, see https://webpack.js.org/guides/author-libraries/
 function getExternals(peers = {}, externalRoots = {}) {
@@ -78,7 +100,9 @@ const getConfig = (pkg, { webpack = {}, babel = {}, styling = {}, server = {}, h
   browserslist: config.browserslist || resolveConfig('browserslist').config.browserslist,
   //
   webpack: {
+    ...webpack,
     resolve: {
+      ...(webpack.resolve || {}),
       extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
       mainFields:
         webpack.resolve && webpack.resolve.mainFields && webpack.resolve.mainFields.length > 0
@@ -99,6 +123,8 @@ const getConfig = (pkg, { webpack = {}, babel = {}, styling = {}, server = {}, h
   },
   //
   babel: {
+    ...babel,
+    rootMode: monorepo ? 'upwards' : undefined,
     corejs: babel.corejs || 2,
     helpers: babel.helpers || false,
     presets: babel.presets,
@@ -106,6 +132,7 @@ const getConfig = (pkg, { webpack = {}, babel = {}, styling = {}, server = {}, h
   },
   //
   styling: {
+    ...styling,
     publicPath: styling.publicPath || './',
     define: styling.define || {},
     fonts: {
@@ -146,23 +173,6 @@ const getConfig = (pkg, { webpack = {}, babel = {}, styling = {}, server = {}, h
     ...html,
   },
   monitor: config.monitor || false,
-});
-
-// TODO babelrc is not (yet) based on user one
-const getBabelConfig = ({ browserslist, babel }) => ({
-  presets: babel.presets || [
-    [
-      'gda',
-      {
-        corejs: babel.corejs,
-        modules: false,
-        transformRuntime: babel.helpers,
-        targets: { browsers: browserslist },
-        // debug: true,
-      },
-    ],
-  ],
-  plugins: babel.plugins,
 });
 
 function webpackConfigure(pkg, cfg) {
