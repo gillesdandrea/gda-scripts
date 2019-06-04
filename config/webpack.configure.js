@@ -43,22 +43,29 @@ const storybookBabelPlugins = [
 ];
 
 // TODO babelrc is not (yet) based on user one
-const getBabelConfig = ({ browserslist, babel }) => ({
-  // rootMode: babel.rootMode,
+const getBabelConfig = ({
+  'print-config': printConfig,
+  mode,
+  browserslist,
+  babel: { corejs = 2, helpers = false, debug, ...babel },
+}) => ({
+  ...babel,
+  // rootMode: babel.rootMode || (monorepo ? 'upwards' : undefined), // not compatible with babelrc: false
   presets: babel.presets || [
     [
       'gda',
       {
-        corejs: babel.corejs,
+        'print-config': printConfig,
+        corejs,
         modules: false,
-        transformRuntime: babel.helpers,
+        transformRuntime: helpers,
         targets: { browsers: browserslist },
-        debug: babel.debug,
+        debug,
       },
     ],
   ],
-  plugins: babel.plugins,
-  babelrc: false,
+  plugins: mode === 'storybook' ? [...(babel.plugins || []), ...storybookBabelPlugins] : babel.plugins,
+  babelrc: false || babel.babelrc,
 });
 
 const DEFAULT_ROOTS = {
@@ -122,14 +129,7 @@ const getConfig = (pkg, { webpack = {}, babel = {}, styling = {}, server = {}, h
     // copy: webpack.copy,
   },
   //
-  babel: {
-    ...babel,
-    rootMode: monorepo ? 'upwards' : undefined,
-    corejs: babel.corejs || 2,
-    helpers: babel.helpers || false,
-    presets: babel.presets,
-    plugins: config.mode === 'storybook' ? [...(babel.plugins || []), ...storybookBabelPlugins] : babel.plugins,
-  },
+  babel, // see getBabelConfig()
   //
   styling: {
     ...styling,
