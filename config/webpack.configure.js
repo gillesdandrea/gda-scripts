@@ -306,7 +306,7 @@ function webpackConfigure(pkg, cfg) {
           test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
           loader: 'url-loader',
           options: {
-            limit: '10000',
+            limit: 10000,
             mimetype: 'application/font-woff',
             ...c.styling.fonts,
           },
@@ -315,7 +315,7 @@ function webpackConfigure(pkg, cfg) {
           test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
           loader: 'url-loader',
           options: {
-            limit: '10000',
+            limit: 10000,
             mimetype: 'application/octet-stream',
             ...c.styling.fonts,
           },
