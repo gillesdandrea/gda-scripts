@@ -1,0 +1,29 @@
+{
+  "name": "js-class-lib",
+  "version": "0.0.0",
+  "private": true,
+  "description": "JavaScript Class Lib",
+  "license": "MIT",
+  "author": "Gilles d'Andréa (https://github.com/gillesdandrea)",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "main": "dist/js-class-lib.js",
+  "module": "dist/js-class-lib.js",
+  "source": "src/index.js",
+  "style": "dist/js-class-lib.css",
+  "scripts": {
+    "build": "gda-scripts webpack lib",
+    "build:storybook": "gda-scripts build-storybook-html",
+    "start": "gda-scripts storybook-html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "gda-scripts": "*"
+  },
+  "peerDependencies": {
+  }
+}
