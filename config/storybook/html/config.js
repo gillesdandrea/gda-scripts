@@ -2,7 +2,9 @@ import { withKnobs } from '@storybook/addon-knobs/html';
 // import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { addDecorator, addParameters, configure } from '@storybook/html';
 import { create } from '@storybook/theming';
+// import { addReadme } from 'storybook-readme/html';
 
+// addDecorator(addReadme);
 addDecorator(withKnobs);
 
 addParameters({
@@ -21,6 +23,9 @@ addParameters({
     hierarchySeparator: /\//,
     hierarchyRootSeparator: /\|/,
   },
+  // readme: {
+  //   codeTheme: 'github',
+  // },
 });
 
 addParameters({

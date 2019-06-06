@@ -43,22 +43,20 @@ const storybookBabelPlugins = [
 ];
 
 // TODO babelrc is not (yet) based on user one
-const getBabelConfig = ({
-  'print-config': printConfig,
-  mode,
-  browserslist,
-  babel: { corejs = 2, helpers = false, debug, ...babel },
-}) => ({
+const getBabelConfig = (
+  { 'print-config': printConfig, mode, browserslist, babel: { corejs = 2, helpers = false, debug, ...babel } },
+  server = false
+) => ({
   ...babel,
   // rootMode: babel.rootMode || (monorepo ? 'upwards' : undefined), // not compatible with babelrc: false
   presets: babel.presets || [
     [
       'gda',
       {
-        'print-config': printConfig,
+        // 'print-config': printConfig,
         corejs,
         modules: false,
-        transformRuntime: helpers,
+        transformRuntime: helpers && !server,
         targets: { browsers: browserslist },
         debug,
       },
@@ -202,7 +200,7 @@ function webpackConfigure(pkg, cfg) {
       externals: createLibrary ? c.webpack.externals.map(external => Object.keys(external)[0]) : undefined,
     });
   }
-  const babel = getBabelConfig(c);
+  const babel = getBabelConfig(c, server);
   const { resolve = {}, optimization = {}, module: { rules = [], ...modules } = {}, plugins = [] } = c.webpack;
   const { generate = server, ...html } = c.html;
   const config = {

@@ -11,9 +11,6 @@ const src = path.resolve(process.cwd(), './src');
 const configPath = path.resolve(process.cwd(), './webpack.config.storybook.js');
 const custom = fs.existsSync(configPath) ? require(configPath) : require('./webpack.config.storybook.js');
 
-// console.log(config);
-// process.exit();
-
 // Export a function. Accept the base config as the only param.
 module.exports = async ({ config, mode }) => {
   // `mode` has a value of 'DEVELOPMENT' or 'PRODUCTION'
@@ -37,9 +34,13 @@ module.exports = async ({ config, mode }) => {
     module: {
       ...(config.module || {}),
       rules: [
-        // keep scss and babel loader
-        ...(custom.module.rules || []).filter(rule => '.scss'.match(rule.test) || rule.loader === 'babel-loader'),
-        ...(config.module.rules || []).filter(rule => rule.loader !== 'babel-loader'),
+        // keep (s)css and babel loader
+        ...(custom.module.rules || []).filter(
+          rule => '.scss'.match(rule.test) || '.css'.match(rule.test) || rule.loader === 'babel-loader'
+        ),
+        ...(config.module.rules || []).filter(
+          rule => !('.scss'.match(rule.test) || '.css'.match(rule.test) || rule.loader === 'babel-loader')
+        ),
         {
           test: /[.-]stor(y|ies)\.jsx?$/,
           loaders: [require.resolve('@storybook/addon-storysource/loader')],
