@@ -1,3 +1,4 @@
+import '@babel/polyfill';
 import React from 'react';
 
 import { withKnobs } from '@storybook/addon-knobs/react';
@@ -34,11 +35,11 @@ addParameters({
   viewport: {
     viewports: {
       // ...INITIAL_VIEWPORTS,
-      mx: { name: 'View Max', styles: { width: '1584px', height: '100%' } },
-      xl: { name: 'View XL', styles: { width: '1312px', height: '100%' } },
-      lg: { name: 'View L', styles: { width: '1056px', height: '100%' } },
-      md: { name: 'View M', styles: { width: '672px', height: '100%' } },
-      sm: { name: 'View S', styles: { width: '320px', height: '100%' } },
+      mx: { name: 'View Max', styles: { width: '1584px', height: 'calc(100% - 40px)' } },
+      xl: { name: 'View XL', styles: { width: '1312px', height: 'calc(100% - 40px)' } },
+      lg: { name: 'View L', styles: { width: '1056px', height: 'calc(100% - 40px)' } },
+      md: { name: 'View M', styles: { width: '672px', height: 'calc(100% - 40px)' } },
+      sm: { name: 'View S', styles: { width: '320px', height: 'calc(100% - 40px)' } },
     },
   },
 });

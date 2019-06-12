@@ -44,7 +44,12 @@ const storybookBabelPlugins = [
 
 // TODO babelrc is not (yet) based on user one
 const getBabelConfig = (
-  { 'print-config': printConfig, mode, browserslist, babel: { corejs = 2, helpers = false, debug, ...babel } },
+  {
+    'print-config': printConfig,
+    mode,
+    browserslist,
+    babel: { corejs, useBuiltIns, stage, helpers = false, debug, ...babel },
+  },
   server = false
 ) => ({
   ...babel,
@@ -53,8 +58,10 @@ const getBabelConfig = (
     [
       'gda',
       {
-        // 'print-config': printConfig,
-        corejs,
+        'print-config': printConfig,
+        corejs: useBuiltIns ? corejs || 2 : undefined,
+        useBuiltIns,
+        stage,
         modules: false,
         transformRuntime: helpers && !server,
         targets: { browsers: browserslist },
@@ -228,7 +235,7 @@ function webpackConfigure(pkg, cfg) {
         },
         {
           test: /\.[jt]sx?$/,
-          exclude: /node_modules(?!\/.+\/src)/, // will compile `src` even in node_modules
+          exclude: /node_modules(?!\/.+\/src)|dist\//, // will compile `src` even in node_modules
           loader: 'babel-loader',
           options: babel,
         },

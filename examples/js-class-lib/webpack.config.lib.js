@@ -8,8 +8,10 @@ module.exports = configure(pkg, {
   sourcemap: true,
   minimize: false,
   // browserslist: ['defaults'],
-  babel: {
-    helpers: true,
-  },
+  // babel: {
+  //   corejs: 2,
+  //   useBuiltIns: 'entry',
+  //   helpers: true,
+  // },
   monitor: false,
 });

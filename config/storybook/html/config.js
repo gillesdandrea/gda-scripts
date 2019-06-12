@@ -1,3 +1,5 @@
+import '@babel/polyfill';
+
 import { withKnobs } from '@storybook/addon-knobs/html';
 // import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { addDecorator, addParameters, configure } from '@storybook/html';
