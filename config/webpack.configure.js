@@ -263,8 +263,10 @@ function webpackConfigure(pkg, cfg) {
             {
               loader: 'sass-loader',
               options: {
-                sourceMap: !!sourcemap,
-                includePaths: nodeModules,
+                // sourceMap: !!sourcemap,
+                sassOptions: {
+                  includePaths: nodeModules,
+                },
               },
             },
             {
