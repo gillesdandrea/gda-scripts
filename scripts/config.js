@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 const path = require('path');
-const cosmiconfig = require('cosmiconfig');
+const { cosmiconfig } = require('cosmiconfig');
 const pkg = require('../package.json');
 
 const allConfigs = ['babel', 'eslint', 'stylelint', 'importsort', 'prettier', 'browserslist', 'postcss'];

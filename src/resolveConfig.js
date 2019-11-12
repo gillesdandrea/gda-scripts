@@ -1,12 +1,12 @@
 const path = require('path');
-const cosmiconfig = require('cosmiconfig');
+const { cosmiconfigSync } = require('cosmiconfig');
 
 const configPath = path.join(__dirname, '../config');
 
 function resolveConfig(config) {
   // return path.resolve(__dirname, `../config/${name}`);
-  const explorer = cosmiconfig(config);
-  return explorer.searchSync() || explorer.searchSync(configPath);
+  const explorer = cosmiconfigSync(config);
+  return explorer.search() || explorer.search(configPath);
 }
 
 module.exports = resolveConfig;

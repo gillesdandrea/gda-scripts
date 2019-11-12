@@ -365,7 +365,7 @@ function webpackConfigure(pkg, cfg) {
         NAME: JSON.stringify(pkg.name),
         VERSION: JSON.stringify(pkg.version),
         REPOSITORY: JSON.stringify((pkg.repository && pkg.repository.url) || pkg.repository),
-        ...c.define,
+        ...c.webpack.define,
       }),
 
       new Webpack.EnvironmentPlugin(['NODE_ENV', 'DEBUG']),
