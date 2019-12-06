@@ -219,7 +219,8 @@ function webpackConfigure(pkg, cfg) {
       chunkFilename: `${c.outputName}-[name]${c.outputSuffix}.js`,
       library: createLibrary ? c.library : undefined,
       libraryTarget: createLibrary ? c.format : undefined,
-      globalObject: createLibrary ? "typeof self !== 'undefined' ? self : this" : undefined, // https://github.com/webpack/webpack/issues/6522
+      // globalObject: createLibrary ? "typeof self !== 'undefined' ? self : this" : undefined, // https://github.com/webpack/webpack/issues/6522
+      globalObject: createLibrary ? 'this' : undefined, // must be a simple variable or generate code can be wrong
       publicPath: createLibrary ? c.publicPath : undefined,
     },
     devtool: sourcemap === true ? 'source-map' : sourcemap || false,
