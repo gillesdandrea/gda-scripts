@@ -59,7 +59,7 @@ const getBabelConfig = (
       'gda',
       {
         'print-config': printConfig,
-        corejs: useBuiltIns ? corejs || 2 : undefined,
+        corejs: useBuiltIns ? corejs || 3 : undefined,
         useBuiltIns,
         stage,
         modules: false,

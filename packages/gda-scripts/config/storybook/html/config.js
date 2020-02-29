@@ -1,4 +1,5 @@
-import '@babel/polyfill';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 import { withKnobs } from '@storybook/addon-knobs/html';
 // import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';

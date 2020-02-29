@@ -21,7 +21,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.8.0"
+    "core-js": "3.6.4",
+    "regenerator-runtime":"^0.13.3"
   },
   "devDependencies": {
     "@hot-loader/react-dom": "^16.12.0",

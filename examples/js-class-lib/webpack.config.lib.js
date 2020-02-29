@@ -9,7 +9,7 @@ module.exports = configure(pkg, {
   minimize: false,
   // browserslist: ['defaults'],
   // babel: {
-  //   corejs: 2,
+  //   corejs: 3,
   //   useBuiltIns: 'entry',
   //   helpers: true,
   // },

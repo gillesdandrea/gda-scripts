@@ -1,1 +1,1 @@
-module.exports = require('./config/.prettierrc.js');
+module.exports = require('./packages/gda-scripts/config/.prettierrc.js');

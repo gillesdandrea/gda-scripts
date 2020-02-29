@@ -43,7 +43,7 @@ module.exports = async ({ config, mode }) => {
         ),
         {
           test: /[.-]stor(y|ies)\.jsx?$/,
-          loaders: [require.resolve('@storybook/addon-storysource/loader')],
+          loaders: [require.resolve('@storybook/source-loader')],
           enforce: 'pre',
         },
       ],

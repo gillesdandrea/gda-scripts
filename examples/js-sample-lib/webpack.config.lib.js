@@ -8,7 +8,7 @@ module.exports = configure(pkg, {
   sourcemap: true,
   minimize: false,
   // babel: {
-  //   corejs: 2,
+  //   corejs: 3,
   //   useBuiltIns: 'entry',
   //   helpers: true,
   // },
