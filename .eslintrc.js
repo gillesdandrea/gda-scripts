@@ -1,5 +1,5 @@
 // module.exports = require('./config/.eslintrc.js');
 module.exports = {
-  extends: ['./config/.eslintrc.js'].map(require.resolve),
+  extends: ['./packages/gda-scripts/config/.eslintrc.js'].map(require.resolve),
   rules: {},
 };

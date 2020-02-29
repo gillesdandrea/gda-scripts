@@ -21,18 +21,18 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.4"
+    "@babel/polyfill": "^7.8.0"
   },
   "devDependencies": {
-    "@hot-loader/react-dom": "^16.8.6",
-    "gda-scripts": "*",
+    "@hot-loader/react-dom": "^16.12.0",
+    "gda-scripts": "^0.4.1",
     "prop-types": "^15.7.2",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "peerDependencies": {
     "prop-types": "^15.7.2",
-    "react": "16.8.6",
-    "react-dom": "16.8.6"
+    "react": "16.12.0",
+    "react-dom": "16.12.0"
   }
 }

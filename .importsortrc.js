@@ -1,2 +1,2 @@
 /* eslint-disable import/no-extraneous-dependencies */
-module.exports = require('./config/.importsortrc.js');
+module.exports = require('./packages/gda-scripts/config/.importsortrc.js');

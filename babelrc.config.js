@@ -1,4 +1,3 @@
 module.exports = {
-  babelrcRoots: ['.', 'examples/*'],
-  extends: './config/.babelrc.js',
+  extends: './packages/gda-scripts/config/.babelrc.js',
 };

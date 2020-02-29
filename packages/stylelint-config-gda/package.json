@@ -1,0 +1,22 @@
+{
+  "name": "stylelint-config-gda",
+  "version": "0.4.1",
+  "description": "stylelint config based on standard, recommended-scss and rational-order. Used in gda-scripts.",
+  "keywords": [
+    "stylelint-config"
+  ],
+  "repository": "https://github.com/gillesdandrea/stylelint-config-gda",
+  "license": "MIT",
+  "author": "Gilles d'Andréa (https://github.com/gillesdandrea)",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "peerDependencies": {
+    "prettier": "^1.19.1",
+    "stylelint": "^13.2.0",
+    "stylelint-config-rational-order": "^0.1.2",
+    "stylelint-config-recommended-scss": "^4.2.0",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-prettier": "^1.1.2"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "lerna": "3.3.0",
+  "packages": [
+    "packages/*",
+    "examples/*"
+  ],
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "version": "0.4.1",
+  "command": {
+    "publish": {
+      "gitTagVersion": true,
+      "push": true
+    },
+    "version": {
+      "gitTagVersion": false,
+      "push": false
+    }
+  }
+}
