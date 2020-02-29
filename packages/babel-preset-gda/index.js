@@ -6,7 +6,7 @@ module.exports = function preset(
   {
     'print-config': printConfig = false,
     react = true, // or false or { pragma, pragmaFrag, ... }
-    flow = false, // or false
+    flow = false, // or true
     typescript = false, // or true or { isTSX, jsxPragma, allExtension }
     transformRuntime = false, // or @babel/plugin-transform-runtime config
     useBuiltIns = undefined, // false | entry | usage
@@ -38,6 +38,7 @@ module.exports = function preset(
       typescript && ['@babel/preset-typescript', typescriptConfig],
     ].filter(Boolean),
     plugins: [
+      'babel-plugin-macros',
       transformRuntime && [
         '@babel/plugin-transform-runtime',
         { corejs, ...(typeof transformRuntime === 'object' ? transformRuntime : { useESModules: true }) },
@@ -49,9 +50,7 @@ module.exports = function preset(
       // Stage 1
       stage1 && '@babel/plugin-proposal-export-default-from',
       stage1 && '@babel/plugin-proposal-logical-assignment-operators',
-      stage1 && ['@babel/plugin-proposal-optional-chaining', { loose }],
       stage1 && ['@babel/plugin-proposal-pipeline-operator', { proposal: pipelineProposal }],
-      stage1 && ['@babel/plugin-proposal-nullish-coalescing-operator', { loose }],
       stage1 && '@babel/plugin-proposal-do-expressions',
 
       // Stage 2
@@ -64,6 +63,8 @@ module.exports = function preset(
       // Stage 3
       stage3 && '@babel/plugin-syntax-dynamic-import',
       stage3 && '@babel/plugin-syntax-import-meta',
+      stage3 && ['@babel/plugin-proposal-optional-chaining', { loose }],
+      stage3 && ['@babel/plugin-proposal-nullish-coalescing-operator', { loose }],
       stage3 && ['@babel/plugin-proposal-class-properties', { loose }],
       stage3 && '@babel/plugin-proposal-json-strings',
       stage3 && ['@babel/plugin-proposal-private-methods', { loose }],
