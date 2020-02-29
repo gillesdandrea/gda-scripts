@@ -1,5 +1,5 @@
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
 
 module.exports = {
   parser: 'babel-eslint',
@@ -26,7 +26,7 @@ module.exports = {
   },
 
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2020,
     sourceType: 'module',
     ecmaFeatures: {
       impliedStrict: true,
@@ -35,6 +35,11 @@ module.exports = {
   },
 
   settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx'], // TODO '.ts', '.tsx'
+      },
+    },
     react: {
       version: 'detect',
     },
@@ -52,12 +57,6 @@ module.exports = {
     'no-unused-vars': ['warn', { vars: 'local', args: 'after-used', ignoreRestSiblings: true }],
     'prefer-template': 'warn',
     'react/destructuring-assignment': 'off',
-  },
-  settings: {
-    'import/resolver': {
-      node: {
-        extensions: ['.js', '.jsx'], // TODO '.ts', '.tsx'
-      },
-    },
+    'react/jsx-props-no-spreading': 'warn',
   },
 };
